@@ -26,7 +26,7 @@ def ffuf(urls, wordlist, no):
     for url in urls:
         fuzz = str(url) + "/FUZZ"
         text = str(url) + ".txt"
-        p = subprocess.Popen(["ffuf", "-w", wordlist, "-u", fuzz, "-o", text])
+        p = subprocess.Popen(["ffuf", "-w", wordlist, "-u", fuzz, ">", text])
         processes.append(p)
     for p in processes:
         if p.wait() != 0:
