@@ -20,9 +20,9 @@ def get_arguments():
     return options
 
 
-def ffuf(urls, wordlist):
+def ffuf(urls, wordlist, no):
     processes = []
-    print("inserting new 5 urls")
+    print("inserting new " + no + " urls")
     for url in urls:
         fuzz = str(url) + "/FUZZ"
         text = str(url) + ".txt"
@@ -31,25 +31,25 @@ def ffuf(urls, wordlist):
     for p in processes:
         if p.wait() != 0:
             print("There was an error")
-    print("the 5 urls finished fuzzing")
+    print("the " + no + " urls finished fuzzing")
 
 
 def first_urls(all_urls, start_line, end_line):
     with open(all_urls, "r") as urls:
-        first_lines = islice(urls, int(start_line), int(end_line))
+        first_lines = islice(urls, start_line, end_line)
     return first_lines
 
 
 options = get_arguments()
 start = 1
-end = options.threads
+end = int(options.threads)
 while True:
     five_urls = first_urls(options.url, start, end)
     if not five_urls:
         break
     else:
-        ffuf(five_urls, options.wordlist)
-        start = start + options.threads
-        end = end + options.threads
+        ffuf(five_urls, options.wordlist, options.threads)
+        start = start + int(options.threads)
+        end = end + int(options.threads)
 print("finally finished ffufing")
 
