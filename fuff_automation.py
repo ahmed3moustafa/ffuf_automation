@@ -36,7 +36,7 @@ def ffuf(urls, wordlist):
 
 def first_urls(all_urls, start_line, end_line):
     with open(all_urls, "r") as urls:
-        first_lines = islice(urls, start_line, end_line)
+        first_lines = islice(urls, int(start_line), int(end_line))
     return first_lines
 
 
